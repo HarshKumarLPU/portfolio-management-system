@@ -96,7 +96,7 @@ const Register = () => {
           </div>
 
           <button
-            onClick={() => window.location.href = 'http://localhost:8000/api/auth/google'}
+           onClick={() => window.location.href = 'https://portfolio-management-system-l83z.onrender.com/api/auth/google'}
             className="w-full border border-gray-300 dark:border-gray-600 rounded-xl py-3 flex items-center justify-center gap-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
           >
             <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="w-5 h-5" alt="Google" />
