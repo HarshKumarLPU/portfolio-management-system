@@ -100,11 +100,9 @@ const Dashboard = () => {
           <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
 
             {/* Avatar */}
+            {/* Avatar */}
             <div className="relative">
-              <div className="ring-4 ring-white/30 rounded-full">
-                <AvatarUpload />
-              </div>
-              <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-400 border-2 border-white rounded-full" />
+              <AvatarUpload />
             </div>
 
             {/* User Info */}
