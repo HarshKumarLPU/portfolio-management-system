@@ -60,7 +60,13 @@ const EditPortfolio = () => {
     setSaving(true)
     try {
       if (activeSection === 'basic') {
-        await updateBasicInfo({ title: basic.title, location: basic.location, about: basic.about, github: basic.github, linkedin: basic.linkedin })
+        await updateBasicInfo({
+          title: basic.title,
+          location: basic.location,
+          about: basic.about,
+          github: basic.github,
+          linkedin: basic.linkedin,
+        })
       } else if (activeSection === 'skills') {
         const cleanSkills = skills.map(({ id, _id, ...rest }) => rest)
         await updateSkills({ skills: cleanSkills })
@@ -97,110 +103,76 @@ const EditPortfolio = () => {
   const addEducation = () => setEducation(prev => [...prev, { id: Date.now(), degree: '', school: '', duration: '', grade: '' }])
 
   const sections = [
-    { key: 'basic', label: 'Basic Info', icon: '👤', gradient: 'from-blue-500 to-indigo-600' },
-    { key: 'skills', label: 'Skills', icon: '⚡', gradient: 'from-yellow-500 to-orange-500' },
-    { key: 'projects', label: 'Projects', icon: '🗂️', gradient: 'from-purple-500 to-pink-500' },
-    { key: 'experience', label: 'Experience', icon: '💼', gradient: 'from-green-500 to-teal-500' },
-    { key: 'education', label: 'Education', icon: '🎓', gradient: 'from-pink-500 to-rose-500' },
+    { key: 'basic', label: 'Basic Info', icon: '👤' },
+    { key: 'skills', label: 'Skills', icon: '⚡' },
+    { key: 'projects', label: 'Projects', icon: '🗂️' },
+    { key: 'experience', label: 'Experience', icon: '💼' },
+    { key: 'education', label: 'Education', icon: '🎓' },
   ]
 
-  const inputClass = "w-full border border-gray-200 dark:border-gray-600 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 transition bg-gray-50 dark:bg-gray-700/50 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
-  const labelClass = "block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5"
+  const inputClass = "w-full border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 transition bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
+  const labelClass = "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-purple-700 to-pink-600 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+      <div className="min-h-screen flex items-center justify-center dark:bg-gray-900">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-white/30 border-t-white rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-white/70">Loading portfolio...</p>
+          <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-gray-500 dark:text-gray-400">Loading portfolio...</p>
         </div>
       </div>
     )
   }
 
-  const activeGradient = sections.find(s => s.key === activeSection)?.gradient || 'from-indigo-500 to-purple-600'
-
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
 
-      {/* ── HERO HEADER ── */}
-      <div className="relative bg-gradient-to-br from-indigo-600 via-purple-700 to-pink-600 dark:from-gray-950 dark:via-indigo-950 dark:to-purple-950 text-white px-6 py-10 overflow-hidden">
-        <div className="absolute top-0 right-0 w-72 h-72 bg-white/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-72 h-72 bg-white/5 rounded-full blur-3xl" />
-
-        <div className="max-w-6xl mx-auto flex items-center justify-between relative z-10">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-indigo-600 to-purple-700 dark:from-slate-900 dark:via-gray-900 dark:to-black text-white px-6 py-8">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div>
-            <div className="flex items-center gap-3 mb-1">
-              <div className={`w-10 h-10 rounded-2xl bg-gradient-to-br ${activeGradient} flex items-center justify-center text-xl shadow-lg`}>
-                {sections.find(s => s.key === activeSection)?.icon}
-              </div>
-              <h1 className="text-2xl font-extrabold">Edit Portfolio</h1>
-            </div>
-            <p className="text-white/60 text-sm ml-13">
-              Editing: <span className="text-yellow-400 font-bold">{sections.find(s => s.key === activeSection)?.label}</span>
-            </p>
+            <h1 className="text-2xl font-extrabold">Edit Portfolio ✏️</h1>
+            <p className="text-indigo-200 text-sm mt-1">Keep your portfolio up to date</p>
           </div>
           <button
             onClick={handleSave}
             disabled={saving}
-            className={`font-extrabold px-7 py-3 rounded-2xl transition-all duration-300 text-sm disabled:opacity-60 shadow-lg hover:scale-105 ${
-              saved
-                ? 'bg-green-400 text-gray-900'
-                : 'bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 hover:from-yellow-300 hover:to-orange-300 hover:shadow-yellow-400/30'
-            }`}
+            className="bg-yellow-400 text-gray-900 font-bold px-6 py-2.5 rounded-full hover:bg-yellow-300 transition text-sm disabled:opacity-60"
           >
-            {saving ? (
-              <span className="flex items-center gap-2">
-                <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
-                </svg>
-                Saving...
-              </span>
-            ) : saved ? '✅ Saved!' : '💾 Save Changes'}
+            {saving ? 'Saving...' : saved ? '✅ Saved!' : '💾 Save Changes'}
           </button>
         </div>
       </div>
 
       <div className="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row gap-6">
 
-        {/* ── SIDEBAR ── */}
-        <div className="md:w-60 flex-shrink-0">
-          <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-sm p-4 sticky top-24 border border-gray-100 dark:border-gray-700">
-            <p className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest px-3 mb-3">Sections</p>
+        {/* Sidebar */}
+        <div className="md:w-56 flex-shrink-0">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-3 sticky top-24">
             {sections.map((sec) => (
               <button
                 key={sec.key}
                 onClick={() => setActiveSection(sec.key)}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold transition-all duration-300 mb-1 ${
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition mb-1 ${
                   activeSection === sec.key
-                    ? `bg-gradient-to-r ${sec.gradient} text-white shadow-md`
-                    : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                    ? 'bg-indigo-600 text-white'
+                    : 'text-gray-600 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700'
                 }`}
               >
-                <span className={`w-8 h-8 rounded-xl flex items-center justify-center text-base transition-all duration-300 ${
-                  activeSection === sec.key
-                    ? 'bg-white/20'
-                    : `bg-gradient-to-br ${sec.gradient} text-white`
-                }`}>
-                  {sec.icon}
-                </span>
+                <span>{sec.icon}</span>
                 {sec.label}
               </button>
             ))}
           </div>
         </div>
 
-        {/* ── CONTENT ── */}
+        {/* Content */}
         <div className="flex-1">
 
           {/* BASIC INFO */}
           {activeSection === 'basic' && (
-            <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-sm p-8 border border-gray-100 dark:border-gray-700">
-              <div className="flex items-center gap-3 mb-7">
-                <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-xl shadow-md">👤</div>
-                <h2 className="text-xl font-extrabold text-gray-800 dark:text-white">Basic Information</h2>
-              </div>
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-8">
+              <h2 className="text-lg font-bold text-gray-800 dark:text-white mb-6">Basic Information</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 {[
                   { label: 'Full Name', field: 'fullName', placeholder: 'John Doe', disabled: true },
@@ -219,7 +191,7 @@ const EditPortfolio = () => {
                       onChange={(e) => setBasic({ ...basic, [item.field]: e.target.value })}
                       placeholder={item.placeholder}
                       disabled={item.disabled}
-                      className={`${inputClass} ${item.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      className={`${inputClass} ${item.disabled ? 'opacity-60 cursor-not-allowed' : ''}`}
                     />
                   </div>
                 ))}
@@ -239,72 +211,46 @@ const EditPortfolio = () => {
 
           {/* SKILLS */}
           {activeSection === 'skills' && (
-            <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-sm p-8 border border-gray-100 dark:border-gray-700">
-              <div className="flex items-center justify-between mb-7">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center text-xl shadow-md">⚡</div>
-                  <h2 className="text-xl font-extrabold text-gray-800 dark:text-white">Skills</h2>
-                </div>
-                <button
-                  onClick={addSkill}
-                  className="bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 text-sm font-extrabold px-5 py-2.5 rounded-2xl hover:from-yellow-300 hover:to-orange-300 transition-all duration-300 hover:scale-105 shadow-md"
-                >
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-8">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-lg font-bold text-gray-800 dark:text-white">Skills</h2>
+                <button onClick={addSkill} className="bg-indigo-600 text-white text-sm font-semibold px-4 py-2 rounded-xl hover:bg-indigo-700 transition">
                   + Add Skill
                 </button>
               </div>
-              <div className="space-y-4">
+              <div className="space-y-5">
                 {skills.map((skill) => (
-                  <div key={skill._id || skill.id} className="group bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-5 border border-gray-100 dark:border-gray-600 hover:shadow-md transition-all duration-300">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-2 h-8 rounded-full bg-gradient-to-b from-yellow-400 to-orange-500" />
+                  <div key={skill._id || skill.id} className="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+                    <div className="flex items-center gap-3 mb-3">
                       <input
                         type="text"
                         value={skill.name}
                         onChange={(e) => updateItem(setSkills, skill._id || skill.id, 'name', e.target.value)}
                         placeholder="Skill name (e.g. React)"
-                        className="flex-1 border border-gray-200 dark:border-gray-600 rounded-2xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-white dark:bg-gray-800 text-gray-800 dark:text-white"
+                        className="flex-1 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white dark:bg-gray-800 text-gray-800 dark:text-white"
                       />
                       <button
                         onClick={() => removeItem(setSkills, skill._id || skill.id)}
-                        className="w-9 h-9 bg-red-100 dark:bg-red-900/30 text-red-500 rounded-xl hover:bg-red-200 dark:hover:bg-red-900/50 transition-all duration-300 text-sm flex items-center justify-center hover:scale-110"
+                        className="w-8 h-8 bg-red-100 dark:bg-red-900/30 text-red-500 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/50 transition text-sm flex items-center justify-center"
                       >
                         ✕
                       </button>
                     </div>
                     <div className="flex items-center gap-4">
-                      <div className="flex-1 bg-gray-200 dark:bg-gray-600 rounded-full h-2 overflow-hidden">
-                        <div
-                          className="bg-gradient-to-r from-yellow-400 to-orange-500 h-2 rounded-full transition-all duration-300"
-                          style={{ width: `${skill.level}%` }}
-                        />
-                      </div>
                       <input
                         type="range"
                         min="0"
                         max="100"
                         value={skill.level}
                         onChange={(e) => updateItem(setSkills, skill._id || skill.id, 'level', Number(e.target.value))}
-                        className="flex-1 accent-orange-500 absolute opacity-0 w-full cursor-pointer"
-                        style={{ position: 'relative' }}
+                        className="flex-1 accent-indigo-600"
                       />
-                      <span className="text-sm font-extrabold text-orange-500 w-12 text-right">{skill.level}%</span>
+                      <span className="text-sm font-bold text-indigo-600 w-10 text-right">{skill.level}%</span>
                     </div>
-                    <input
-                      type="range"
-                      min="0"
-                      max="100"
-                      value={skill.level}
-                      onChange={(e) => updateItem(setSkills, skill._id || skill.id, 'level', Number(e.target.value))}
-                      className="w-full mt-2 accent-orange-500"
-                    />
                   </div>
                 ))}
                 {skills.length === 0 && (
-                  <div className="text-center py-12 bg-gray-50 dark:bg-gray-700/30 rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-600">
-                    <p className="text-4xl mb-3">⚡</p>
-                    <p className="text-gray-400 dark:text-gray-500 font-medium">No skills added yet</p>
-                    <p className="text-gray-300 dark:text-gray-600 text-sm mt-1">Click "+ Add Skill" to get started!</p>
-                  </div>
+                  <p className="text-center text-gray-400 dark:text-gray-500 py-8">No skills added yet. Click "+ Add Skill" to get started!</p>
                 )}
               </div>
             </div>
@@ -312,33 +258,19 @@ const EditPortfolio = () => {
 
           {/* PROJECTS */}
           {activeSection === 'projects' && (
-            <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-sm p-8 border border-gray-100 dark:border-gray-700">
-              <div className="flex items-center justify-between mb-7">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-xl shadow-md">🗂️</div>
-                  <h2 className="text-xl font-extrabold text-gray-800 dark:text-white">Projects</h2>
-                </div>
-                <button
-                  onClick={addProject}
-                  className="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm font-extrabold px-5 py-2.5 rounded-2xl hover:from-purple-400 hover:to-pink-400 transition-all duration-300 hover:scale-105 shadow-md"
-                >
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-8">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-lg font-bold text-gray-800 dark:text-white">Projects</h2>
+                <button onClick={addProject} className="bg-indigo-600 text-white text-sm font-semibold px-4 py-2 rounded-xl hover:bg-indigo-700 transition">
                   + Add Project
                 </button>
               </div>
               <div className="space-y-6">
-                {projects.map((project, index) => (
-                  <div key={project._id || project.id} className="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6 border border-gray-100 dark:border-gray-600 hover:shadow-md transition-all duration-300">
-                    <div className="flex justify-between items-center mb-5">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-xs font-bold shadow-sm">
-                          {index + 1}
-                        </div>
-                        <h3 className="font-bold text-gray-700 dark:text-gray-200">{project.title || 'New Project'}</h3>
-                      </div>
-                      <button
-                        onClick={() => removeItem(setProjects, project._id || project.id)}
-                        className="bg-red-100 dark:bg-red-900/30 text-red-500 text-xs font-bold px-3 py-1.5 rounded-xl hover:bg-red-200 transition-all duration-300"
-                      >
+                {projects.map((project) => (
+                  <div key={project._id || project.id} className="bg-gray-50 dark:bg-gray-700 rounded-xl p-5 border border-gray-100 dark:border-gray-600">
+                    <div className="flex justify-between items-center mb-4">
+                      <h3 className="font-semibold text-gray-700 dark:text-gray-200">Project Details</h3>
+                      <button onClick={() => removeItem(setProjects, project._id || project.id)} className="text-red-400 hover:text-red-600 text-sm font-medium">
                         ✕ Remove
                       </button>
                     </div>
@@ -367,11 +299,7 @@ const EditPortfolio = () => {
                   </div>
                 ))}
                 {projects.length === 0 && (
-                  <div className="text-center py-12 bg-gray-50 dark:bg-gray-700/30 rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-600">
-                    <p className="text-4xl mb-3">🗂️</p>
-                    <p className="text-gray-400 dark:text-gray-500 font-medium">No projects added yet</p>
-                    <p className="text-gray-300 dark:text-gray-600 text-sm mt-1">Click "+ Add Project" to get started!</p>
-                  </div>
+                  <p className="text-center text-gray-400 dark:text-gray-500 py-8">No projects added yet. Click "+ Add Project" to get started!</p>
                 )}
               </div>
             </div>
@@ -379,33 +307,19 @@ const EditPortfolio = () => {
 
           {/* EXPERIENCE */}
           {activeSection === 'experience' && (
-            <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-sm p-8 border border-gray-100 dark:border-gray-700">
-              <div className="flex items-center justify-between mb-7">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-green-500 to-teal-500 flex items-center justify-center text-xl shadow-md">💼</div>
-                  <h2 className="text-xl font-extrabold text-gray-800 dark:text-white">Work Experience</h2>
-                </div>
-                <button
-                  onClick={addExperience}
-                  className="bg-gradient-to-r from-green-500 to-teal-500 text-white text-sm font-extrabold px-5 py-2.5 rounded-2xl hover:from-green-400 hover:to-teal-400 transition-all duration-300 hover:scale-105 shadow-md"
-                >
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-8">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-lg font-bold text-gray-800 dark:text-white">Work Experience</h2>
+                <button onClick={addExperience} className="bg-indigo-600 text-white text-sm font-semibold px-4 py-2 rounded-xl hover:bg-indigo-700 transition">
                   + Add Experience
                 </button>
               </div>
               <div className="space-y-6">
-                {experiences.map((exp, index) => (
-                  <div key={exp._id || exp.id} className="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6 border border-gray-100 dark:border-gray-600 hover:shadow-md transition-all duration-300">
-                    <div className="flex justify-between items-center mb-5">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-green-500 to-teal-500 flex items-center justify-center text-white text-xs font-bold shadow-sm">
-                          {index + 1}
-                        </div>
-                        <h3 className="font-bold text-gray-700 dark:text-gray-200">{exp.role || 'New Experience'}</h3>
-                      </div>
-                      <button
-                        onClick={() => removeItem(setExperiences, exp._id || exp.id)}
-                        className="bg-red-100 dark:bg-red-900/30 text-red-500 text-xs font-bold px-3 py-1.5 rounded-xl hover:bg-red-200 transition-all duration-300"
-                      >
+                {experiences.map((exp) => (
+                  <div key={exp._id || exp.id} className="bg-gray-50 dark:bg-gray-700 rounded-xl p-5 border border-gray-100 dark:border-gray-600">
+                    <div className="flex justify-between items-center mb-4">
+                      <h3 className="font-semibold text-gray-700 dark:text-gray-200">Experience Details</h3>
+                      <button onClick={() => removeItem(setExperiences, exp._id || exp.id)} className="text-red-400 hover:text-red-600 text-sm font-medium">
                         ✕ Remove
                       </button>
                     </div>
@@ -422,15 +336,15 @@ const EditPortfolio = () => {
                         <label className={labelClass}>Duration</label>
                         <input type="text" value={exp.duration} onChange={(e) => updateItem(setExperiences, exp._id || exp.id, 'duration', e.target.value)} placeholder="Jan 2023 – Present" className={inputClass} />
                       </div>
-                      <div className="flex items-center gap-3 mt-6">
-                        <div className={`w-12 h-6 rounded-full transition-all duration-300 cursor-pointer flex items-center px-1 ${exp.current ? 'bg-gradient-to-r from-green-400 to-teal-500' : 'bg-gray-200 dark:bg-gray-600'}`}
-                          onClick={() => updateItem(setExperiences, exp._id || exp.id, 'current', !exp.current)}
-                        >
-                          <div className={`w-4 h-4 bg-white rounded-full shadow transition-all duration-300 ${exp.current ? 'translate-x-6' : 'translate-x-0'}`} />
-                        </div>
-                        <label className="text-sm text-gray-600 dark:text-gray-300 font-medium cursor-pointer"
-                          onClick={() => updateItem(setExperiences, exp._id || exp.id, 'current', !exp.current)}
-                        >
+                      <div className="flex items-center gap-3 mt-5">
+                        <input
+                          type="checkbox"
+                          id={`current-${exp._id || exp.id}`}
+                          checked={exp.current}
+                          onChange={(e) => updateItem(setExperiences, exp._id || exp.id, 'current', e.target.checked)}
+                          className="w-4 h-4 accent-indigo-600"
+                        />
+                        <label htmlFor={`current-${exp._id || exp.id}`} className="text-sm text-gray-600 dark:text-gray-300 font-medium">
                           Currently working here
                         </label>
                       </div>
@@ -442,11 +356,7 @@ const EditPortfolio = () => {
                   </div>
                 ))}
                 {experiences.length === 0 && (
-                  <div className="text-center py-12 bg-gray-50 dark:bg-gray-700/30 rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-600">
-                    <p className="text-4xl mb-3">💼</p>
-                    <p className="text-gray-400 dark:text-gray-500 font-medium">No experience added yet</p>
-                    <p className="text-gray-300 dark:text-gray-600 text-sm mt-1">Click "+ Add Experience" to get started!</p>
-                  </div>
+                  <p className="text-center text-gray-400 dark:text-gray-500 py-8">No experience added yet. Click "+ Add Experience" to get started!</p>
                 )}
               </div>
             </div>
@@ -454,33 +364,19 @@ const EditPortfolio = () => {
 
           {/* EDUCATION */}
           {activeSection === 'education' && (
-            <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-sm p-8 border border-gray-100 dark:border-gray-700">
-              <div className="flex items-center justify-between mb-7">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center text-xl shadow-md">🎓</div>
-                  <h2 className="text-xl font-extrabold text-gray-800 dark:text-white">Education</h2>
-                </div>
-                <button
-                  onClick={addEducation}
-                  className="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-sm font-extrabold px-5 py-2.5 rounded-2xl hover:from-pink-400 hover:to-rose-400 transition-all duration-300 hover:scale-105 shadow-md"
-                >
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-8">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-lg font-bold text-gray-800 dark:text-white">Education</h2>
+                <button onClick={addEducation} className="bg-indigo-600 text-white text-sm font-semibold px-4 py-2 rounded-xl hover:bg-indigo-700 transition">
                   + Add Education
                 </button>
               </div>
               <div className="space-y-6">
-                {education.map((edu, index) => (
-                  <div key={edu._id || edu.id} className="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6 border border-gray-100 dark:border-gray-600 hover:shadow-md transition-all duration-300">
-                    <div className="flex justify-between items-center mb-5">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center text-white text-xs font-bold shadow-sm">
-                          {index + 1}
-                        </div>
-                        <h3 className="font-bold text-gray-700 dark:text-gray-200">{edu.degree || 'New Education'}</h3>
-                      </div>
-                      <button
-                        onClick={() => removeItem(setEducation, edu._id || edu.id)}
-                        className="bg-red-100 dark:bg-red-900/30 text-red-500 text-xs font-bold px-3 py-1.5 rounded-xl hover:bg-red-200 transition-all duration-300"
-                      >
+                {education.map((edu) => (
+                  <div key={edu._id || edu.id} className="bg-gray-50 dark:bg-gray-700 rounded-xl p-5 border border-gray-100 dark:border-gray-600">
+                    <div className="flex justify-between items-center mb-4">
+                      <h3 className="font-semibold text-gray-700 dark:text-gray-200">Education Details</h3>
+                      <button onClick={() => removeItem(setEducation, edu._id || edu.id)} className="text-red-400 hover:text-red-600 text-sm font-medium">
                         ✕ Remove
                       </button>
                     </div>
@@ -505,11 +401,7 @@ const EditPortfolio = () => {
                   </div>
                 ))}
                 {education.length === 0 && (
-                  <div className="text-center py-12 bg-gray-50 dark:bg-gray-700/30 rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-600">
-                    <p className="text-4xl mb-3">🎓</p>
-                    <p className="text-gray-400 dark:text-gray-500 font-medium">No education added yet</p>
-                    <p className="text-gray-300 dark:text-gray-600 text-sm mt-1">Click "+ Add Education" to get started!</p>
-                  </div>
+                  <p className="text-center text-gray-400 dark:text-gray-500 py-8">No education added yet. Click "+ Add Education" to get started!</p>
                 )}
               </div>
             </div>
