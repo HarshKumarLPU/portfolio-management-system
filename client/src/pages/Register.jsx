@@ -16,28 +16,42 @@ const Register = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
     setError('')
   }
+  const validatePassword = (password) => {
+  if (password.length < 6) return 'Password must be at least 6 characters'
+  if (!/[A-Z]/.test(password)) return 'Password must contain at least one uppercase letter'
+  if (!/[a-z]/.test(password)) return 'Password must contain at least one lowercase letter'
+  if (!/[0-9]/.test(password)) return 'Password must contain at least one digit'
+  if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) return 'Password must contain at least one special character'
+  return null
+}
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match!')
-      return
-    }
-    setLoading(true)
-    try {
-      await register({
-        fullName: formData.fullName,
-        username: formData.username,
-        email: formData.email,
-        password: formData.password,
-      })
-      navigate('/dashboard')
-    } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed. Try again.')
-    } finally {
-      setLoading(false)
-    }
+const handleSubmit = async (e) => {
+  e.preventDefault()
+  if (formData.password !== formData.confirmPassword) {
+    setError('Passwords do not match!')
+    return
   }
+  // ✅ Password validation
+  const passwordError = validatePassword(formData.password)
+  if (passwordError) {
+    setError(passwordError)
+    return
+  }
+  setLoading(true)
+  try {
+    await register({
+      fullName: formData.fullName,
+      username: formData.username,
+      email: formData.email,
+      password: formData.password,
+    })
+    navigate('/dashboard')
+  } catch (err) {
+    setError(err.response?.data?.message || 'Registration failed. Try again.')
+  } finally {
+    setLoading(false)
+  }
+}
 
   const inputClass = "w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 transition bg-white dark:bg-gray-700 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
   const labelClass = "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
@@ -124,6 +138,28 @@ const Register = () => {
                   {showPassword ? '🙈' : '👁️'}
                 </button>
               </div>
+
+              {/* Password Strength Indicator */}
+              {formData.password && (
+                <div className="mt-2 space-y-1 bg-gray-50 dark:bg-gray-700 rounded-xl p-3">
+                  {[
+                    { label: 'At least 6 characters', valid: formData.password.length >= 6 },
+                    { label: 'One uppercase letter', valid: /[A-Z]/.test(formData.password) },
+                    { label: 'One lowercase letter', valid: /[a-z]/.test(formData.password) },
+                    { label: 'One digit', valid: /[0-9]/.test(formData.password) },
+                    { label: 'One special character (!@#$...)', valid: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(formData.password) },
+                  ].map((rule) => (
+                    <div key={rule.label} className="flex items-center gap-2 text-xs">
+                      <span className={rule.valid ? 'text-green-500' : 'text-gray-400 dark:text-gray-500'}>
+                        {rule.valid ? '✅' : '○'}
+                      </span>
+                      <span className={rule.valid ? 'text-green-600 dark:text-green-400' : 'text-gray-400 dark:text-gray-500'}>
+                        {rule.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div>

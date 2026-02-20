@@ -46,6 +46,15 @@ export const register = async (req, res, next) => {
   try {
     const { fullName, username, email, password } = req.body
 
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{6,}$/
+
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Password must be at least 6 characters and contain uppercase, lowercase, digit and special character',
+      })
+    }
+
     // Check if user exists
     const existingUser = await User.findOne({
       $or: [{ email }, { username }],
