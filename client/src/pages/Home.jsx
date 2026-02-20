@@ -63,12 +63,6 @@ const Home = () => {
             >
               Get Started Free 🚀
             </Link>
-            <Link
-              to="/portfolio"
-              className="border-2 border-white text-white font-bold px-8 py-3 rounded-full hover:bg-white hover:text-indigo-600 transition text-lg"
-            >
-              View Demo
-            </Link>
           </div>
         </div>
       </section>
