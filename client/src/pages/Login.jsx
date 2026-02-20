@@ -29,23 +29,26 @@ const Login = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 dark:bg-gray-900 dark:from-gray-900 dark:to-gray-900 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
-        <div className="bg-white rounded-3xl shadow-xl p-8">
+        <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8">
+
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-extrabold text-gray-800">Welcome Back 👋</h1>
-            <p className="text-gray-500 mt-2 text-sm">Login to manage your portfolio</p>
+            <h1 className="text-3xl font-extrabold text-gray-800 dark:text-white">Welcome Back 👋</h1>
+            <p className="text-gray-500 dark:text-gray-400 mt-2 text-sm">Login to manage your portfolio</p>
           </div>
 
           {error && (
-            <div className="bg-red-50 border border-red-300 text-red-600 text-sm rounded-xl px-4 py-3 mb-5">
+            <div className="bg-red-50 dark:bg-red-900/30 border border-red-300 dark:border-red-700 text-red-600 dark:text-red-400 text-sm rounded-xl px-4 py-3 mb-5">
               ⚠️ {error}
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Email Address
+              </label>
               <input
                 type="email"
                 name="email"
@@ -53,11 +56,14 @@ const Login = () => {
                 onChange={handleChange}
                 required
                 placeholder="you@example.com"
-                className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
+                className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 transition bg-white dark:bg-gray-700 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
               />
             </div>
+
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Password
+              </label>
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
@@ -66,7 +72,7 @@ const Login = () => {
                   onChange={handleChange}
                   required
                   placeholder="Enter your password"
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 transition pr-12"
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 transition pr-12 bg-white dark:bg-gray-700 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                 />
                 <button
                   type="button"
@@ -76,10 +82,13 @@ const Login = () => {
                   {showPassword ? '🙈' : '👁️'}
                 </button>
               </div>
-              <Link to="/forgot-password" className="text-xs text-indigo-500 hover:underline">
-                Forgot Password?
-              </Link>
+              <div className="mt-1 text-right">
+                <Link to="/forgot-password" className="text-xs text-indigo-500 hover:underline">
+                  Forgot Password?
+                </Link>
+              </div>
             </div>
+
             <button
               type="submit"
               disabled={loading}
@@ -92,7 +101,7 @@ const Login = () => {
           {/* Divider */}
           <div className="flex items-center my-6">
             <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
-            <span className="mx-3 text-gray-400 text-xs">OR</span>
+            <span className="mx-3 text-gray-400 dark:text-gray-500 text-xs">OR</span>
             <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
           </div>
 
@@ -105,10 +114,13 @@ const Login = () => {
             Continue with Google
           </button>
 
-          <p className="text-center text-sm text-gray-500 mt-6">
+          <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-6">
             Don't have an account?{' '}
-            <Link to="/register" className="text-indigo-600 font-semibold hover:underline">Register here</Link>
+            <Link to="/register" className="text-indigo-600 font-semibold hover:underline">
+              Register here
+            </Link>
           </p>
+
         </div>
       </div>
     </div>
