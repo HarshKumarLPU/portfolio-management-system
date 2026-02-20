@@ -25,7 +25,6 @@ const EditPortfolio = () => {
   const [experiences, setExperiences] = useState([])
   const [education, setEducation] = useState([])
 
-  // Load real portfolio data
   useEffect(() => {
     const fetchPortfolio = async () => {
       try {
@@ -58,37 +57,37 @@ const EditPortfolio = () => {
   }, [])
 
   const handleSave = async () => {
-  setSaving(true)
-  try {
-    if (activeSection === 'basic') {
-      await updateBasicInfo({
-        title: basic.title,
-        location: basic.location,
-        about: basic.about,
-        github: basic.github,
-        linkedin: basic.linkedin,
-      })
-    } else if (activeSection === 'skills') {
-      const cleanSkills = skills.map(({ id, _id, ...rest }) => rest)
-      await updateSkills({ skills: cleanSkills })
-    } else if (activeSection === 'projects') {
-      const cleanProjects = projects.map(({ id, _id, ...rest }) => rest)
-      await updateProjects({ projects: cleanProjects })
-    } else if (activeSection === 'experience') {
-      const cleanExperience = experiences.map(({ id, _id, ...rest }) => rest)
-      await updateExperience({ experience: cleanExperience })
-    } else if (activeSection === 'education') {
-      const cleanEducation = education.map(({ id, _id, ...rest }) => rest)
-      await updateEducation({ education: cleanEducation })
+    setSaving(true)
+    try {
+      if (activeSection === 'basic') {
+        await updateBasicInfo({
+          title: basic.title,
+          location: basic.location,
+          about: basic.about,
+          github: basic.github,
+          linkedin: basic.linkedin,
+        })
+      } else if (activeSection === 'skills') {
+        const cleanSkills = skills.map(({ id, _id, ...rest }) => rest)
+        await updateSkills({ skills: cleanSkills })
+      } else if (activeSection === 'projects') {
+        const cleanProjects = projects.map(({ id, _id, ...rest }) => rest)
+        await updateProjects({ projects: cleanProjects })
+      } else if (activeSection === 'experience') {
+        const cleanExperience = experiences.map(({ id, _id, ...rest }) => rest)
+        await updateExperience({ experience: cleanExperience })
+      } else if (activeSection === 'education') {
+        const cleanEducation = education.map(({ id, _id, ...rest }) => rest)
+        await updateEducation({ education: cleanEducation })
+      }
+      setSaved(true)
+      setTimeout(() => setSaved(false), 2500)
+    } catch (error) {
+      console.error('Error saving:', error)
+    } finally {
+      setSaving(false)
     }
-    setSaved(true)
-    setTimeout(() => setSaved(false), 2500)
-  } catch (error) {
-    console.error('Error saving:', error)
-  } finally {
-    setSaving(false)
   }
-}
 
   const updateItem = (setter, id, field, value) => {
     setter(prev => prev.map(item => item._id === id || item.id === id ? { ...item, [field]: value } : item))
@@ -111,22 +110,22 @@ const EditPortfolio = () => {
     { key: 'education', label: 'Education', icon: '🎓' },
   ]
 
-  const inputClass = "w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 transition bg-gray-50"
-  const labelClass = "block text-sm font-medium text-gray-700 mb-1"
+  const inputClass = "w-full border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 transition bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
+  const labelClass = "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center dark:bg-gray-900">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-500">Loading portfolio...</p>
+          <p className="text-gray-500 dark:text-gray-400">Loading portfolio...</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
 
       {/* Header */}
       <div className="bg-gradient-to-r from-indigo-600 to-purple-700 text-white px-6 py-8">
@@ -149,13 +148,15 @@ const EditPortfolio = () => {
 
         {/* Sidebar */}
         <div className="md:w-56 flex-shrink-0">
-          <div className="bg-white rounded-2xl shadow-sm p-3 sticky top-24">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-3 sticky top-24">
             {sections.map((sec) => (
               <button
                 key={sec.key}
                 onClick={() => setActiveSection(sec.key)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition mb-1 ${
-                  activeSection === sec.key ? 'bg-indigo-600 text-white' : 'text-gray-600 hover:bg-indigo-50'
+                  activeSection === sec.key
+                    ? 'bg-indigo-600 text-white'
+                    : 'text-gray-600 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700'
                 }`}
               >
                 <span>{sec.icon}</span>
@@ -170,8 +171,8 @@ const EditPortfolio = () => {
 
           {/* BASIC INFO */}
           {activeSection === 'basic' && (
-            <div className="bg-white rounded-2xl shadow-sm p-8">
-              <h2 className="text-lg font-bold text-gray-800 mb-6">Basic Information</h2>
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-8">
+              <h2 className="text-lg font-bold text-gray-800 dark:text-white mb-6">Basic Information</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 {[
                   { label: 'Full Name', field: 'fullName', placeholder: 'John Doe', disabled: true },
@@ -210,27 +211,27 @@ const EditPortfolio = () => {
 
           {/* SKILLS */}
           {activeSection === 'skills' && (
-            <div className="bg-white rounded-2xl shadow-sm p-8">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-8">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-bold text-gray-800">Skills</h2>
+                <h2 className="text-lg font-bold text-gray-800 dark:text-white">Skills</h2>
                 <button onClick={addSkill} className="bg-indigo-600 text-white text-sm font-semibold px-4 py-2 rounded-xl hover:bg-indigo-700 transition">
                   + Add Skill
                 </button>
               </div>
               <div className="space-y-5">
                 {skills.map((skill) => (
-                  <div key={skill._id || skill.id} className="bg-gray-50 rounded-xl p-4">
+                  <div key={skill._id || skill.id} className="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
                     <div className="flex items-center gap-3 mb-3">
                       <input
                         type="text"
                         value={skill.name}
                         onChange={(e) => updateItem(setSkills, skill._id || skill.id, 'name', e.target.value)}
                         placeholder="Skill name (e.g. React)"
-                        className="flex-1 border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white"
+                        className="flex-1 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white dark:bg-gray-800 text-gray-800 dark:text-white"
                       />
                       <button
                         onClick={() => removeItem(setSkills, skill._id || skill.id)}
-                        className="w-8 h-8 bg-red-100 text-red-500 rounded-lg hover:bg-red-200 transition text-sm flex items-center justify-center"
+                        className="w-8 h-8 bg-red-100 dark:bg-red-900/30 text-red-500 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/50 transition text-sm flex items-center justify-center"
                       >
                         ✕
                       </button>
@@ -249,7 +250,7 @@ const EditPortfolio = () => {
                   </div>
                 ))}
                 {skills.length === 0 && (
-                  <p className="text-center text-gray-400 py-8">No skills added yet. Click "+ Add Skill" to get started!</p>
+                  <p className="text-center text-gray-400 dark:text-gray-500 py-8">No skills added yet. Click "+ Add Skill" to get started!</p>
                 )}
               </div>
             </div>
@@ -257,18 +258,18 @@ const EditPortfolio = () => {
 
           {/* PROJECTS */}
           {activeSection === 'projects' && (
-            <div className="bg-white rounded-2xl shadow-sm p-8">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-8">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-bold text-gray-800">Projects</h2>
+                <h2 className="text-lg font-bold text-gray-800 dark:text-white">Projects</h2>
                 <button onClick={addProject} className="bg-indigo-600 text-white text-sm font-semibold px-4 py-2 rounded-xl hover:bg-indigo-700 transition">
                   + Add Project
                 </button>
               </div>
               <div className="space-y-6">
                 {projects.map((project) => (
-                  <div key={project._id || project.id} className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+                  <div key={project._id || project.id} className="bg-gray-50 dark:bg-gray-700 rounded-xl p-5 border border-gray-100 dark:border-gray-600">
                     <div className="flex justify-between items-center mb-4">
-                      <h3 className="font-semibold text-gray-700">Project Details</h3>
+                      <h3 className="font-semibold text-gray-700 dark:text-gray-200">Project Details</h3>
                       <button onClick={() => removeItem(setProjects, project._id || project.id)} className="text-red-400 hover:text-red-600 text-sm font-medium">
                         ✕ Remove
                       </button>
@@ -298,7 +299,7 @@ const EditPortfolio = () => {
                   </div>
                 ))}
                 {projects.length === 0 && (
-                  <p className="text-center text-gray-400 py-8">No projects added yet. Click "+ Add Project" to get started!</p>
+                  <p className="text-center text-gray-400 dark:text-gray-500 py-8">No projects added yet. Click "+ Add Project" to get started!</p>
                 )}
               </div>
             </div>
@@ -306,18 +307,18 @@ const EditPortfolio = () => {
 
           {/* EXPERIENCE */}
           {activeSection === 'experience' && (
-            <div className="bg-white rounded-2xl shadow-sm p-8">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-8">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-bold text-gray-800">Work Experience</h2>
+                <h2 className="text-lg font-bold text-gray-800 dark:text-white">Work Experience</h2>
                 <button onClick={addExperience} className="bg-indigo-600 text-white text-sm font-semibold px-4 py-2 rounded-xl hover:bg-indigo-700 transition">
                   + Add Experience
                 </button>
               </div>
               <div className="space-y-6">
                 {experiences.map((exp) => (
-                  <div key={exp._id || exp.id} className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+                  <div key={exp._id || exp.id} className="bg-gray-50 dark:bg-gray-700 rounded-xl p-5 border border-gray-100 dark:border-gray-600">
                     <div className="flex justify-between items-center mb-4">
-                      <h3 className="font-semibold text-gray-700">Experience Details</h3>
+                      <h3 className="font-semibold text-gray-700 dark:text-gray-200">Experience Details</h3>
                       <button onClick={() => removeItem(setExperiences, exp._id || exp.id)} className="text-red-400 hover:text-red-600 text-sm font-medium">
                         ✕ Remove
                       </button>
@@ -343,7 +344,7 @@ const EditPortfolio = () => {
                           onChange={(e) => updateItem(setExperiences, exp._id || exp.id, 'current', e.target.checked)}
                           className="w-4 h-4 accent-indigo-600"
                         />
-                        <label htmlFor={`current-${exp._id || exp.id}`} className="text-sm text-gray-600 font-medium">
+                        <label htmlFor={`current-${exp._id || exp.id}`} className="text-sm text-gray-600 dark:text-gray-300 font-medium">
                           Currently working here
                         </label>
                       </div>
@@ -355,7 +356,7 @@ const EditPortfolio = () => {
                   </div>
                 ))}
                 {experiences.length === 0 && (
-                  <p className="text-center text-gray-400 py-8">No experience added yet. Click "+ Add Experience" to get started!</p>
+                  <p className="text-center text-gray-400 dark:text-gray-500 py-8">No experience added yet. Click "+ Add Experience" to get started!</p>
                 )}
               </div>
             </div>
@@ -363,18 +364,18 @@ const EditPortfolio = () => {
 
           {/* EDUCATION */}
           {activeSection === 'education' && (
-            <div className="bg-white rounded-2xl shadow-sm p-8">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-8">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-bold text-gray-800">Education</h2>
+                <h2 className="text-lg font-bold text-gray-800 dark:text-white">Education</h2>
                 <button onClick={addEducation} className="bg-indigo-600 text-white text-sm font-semibold px-4 py-2 rounded-xl hover:bg-indigo-700 transition">
                   + Add Education
                 </button>
               </div>
               <div className="space-y-6">
                 {education.map((edu) => (
-                  <div key={edu._id || edu.id} className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+                  <div key={edu._id || edu.id} className="bg-gray-50 dark:bg-gray-700 rounded-xl p-5 border border-gray-100 dark:border-gray-600">
                     <div className="flex justify-between items-center mb-4">
-                      <h3 className="font-semibold text-gray-700">Education Details</h3>
+                      <h3 className="font-semibold text-gray-700 dark:text-gray-200">Education Details</h3>
                       <button onClick={() => removeItem(setEducation, edu._id || edu.id)} className="text-red-400 hover:text-red-600 text-sm font-medium">
                         ✕ Remove
                       </button>
@@ -400,7 +401,7 @@ const EditPortfolio = () => {
                   </div>
                 ))}
                 {education.length === 0 && (
-                  <p className="text-center text-gray-400 py-8">No education added yet. Click "+ Add Education" to get started!</p>
+                  <p className="text-center text-gray-400 dark:text-gray-500 py-8">No education added yet. Click "+ Add Education" to get started!</p>
                 )}
               </div>
             </div>

@@ -41,10 +41,10 @@ const Dashboard = () => {
   }
 
   const statsData = [
-    { label: 'Profile Views', value: stats?.views ?? 0, icon: '👁️', color: 'bg-blue-50 text-blue-600' },
-    { label: 'Projects Added', value: stats?.projectsCount ?? 0, icon: '🗂️', color: 'bg-purple-50 text-purple-600' },
-    { label: 'Skills Listed', value: stats?.skillsCount ?? 0, icon: '⚡', color: 'bg-yellow-50 text-yellow-600' },
-    { label: 'CV Downloads', value: stats?.cvDownloads ?? 0, icon: '📥', color: 'bg-green-50 text-green-600' },
+    { label: 'Profile Views', value: stats?.views ?? 0, icon: '👁️', color: 'bg-blue-50 dark:bg-blue-900/30 text-blue-600' },
+    { label: 'Projects Added', value: stats?.projectsCount ?? 0, icon: '🗂️', color: 'bg-purple-50 dark:bg-purple-900/30 text-purple-600' },
+    { label: 'Skills Listed', value: stats?.skillsCount ?? 0, icon: '⚡', color: 'bg-yellow-50 dark:bg-yellow-900/30 text-yellow-600' },
+    { label: 'CV Downloads', value: stats?.cvDownloads ?? 0, icon: '📥', color: 'bg-green-50 dark:bg-green-900/30 text-green-600' },
   ]
 
   const completionItems = [
@@ -62,12 +62,14 @@ const Dashboard = () => {
     { label: 'Public Profile', path: `/profile/${user?.username}`, icon: '🔗', color: 'bg-pink-600 hover:bg-pink-700' },
   ]
 
+  const liveUrl = 'https://portfolio-management-system-woad.vercel.app'
+
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center dark:bg-gray-900">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-500">Loading dashboard...</p>
+          <p className="text-gray-500 dark:text-gray-400">Loading dashboard...</p>
         </div>
       </div>
     )
@@ -123,8 +125,8 @@ const Dashboard = () => {
               <div className={`text-3xl w-12 h-12 flex items-center justify-center rounded-xl mb-3 ${stat.color}`}>
                 {stat.icon}
               </div>
-              <p className="text-2xl font-extrabold text-gray-800">{stat.value}</p>
-              <p className="text-gray-500 text-sm mt-1">{stat.label}</p>
+              <p className="text-2xl font-extrabold text-gray-800 dark:text-white">{stat.value}</p>
+              <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">{stat.label}</p>
             </div>
           ))}
         </div>
@@ -134,7 +136,7 @@ const Dashboard = () => {
 
           {/* Portfolio Summary */}
           <div className="md:col-span-2 bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6">
-            <h2 className="text-lg font-bold text-gray-800 mb-5">Portfolio Summary</h2>
+            <h2 className="text-lg font-bold text-gray-800 dark:text-white mb-5">Portfolio Summary</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               {[
                 { label: 'Skills', value: portfolio?.skills?.length || 0, icon: '⚡' },
@@ -144,10 +146,10 @@ const Dashboard = () => {
                 { label: 'Profile Views', value: portfolio?.views || 0, icon: '👁️' },
                 { label: 'CV Downloads', value: portfolio?.cvDownloads || 0, icon: '📥' },
               ].map((item) => (
-                <div key={item.label} className="bg-indigo-50 rounded-xl p-4 text-center">
+                <div key={item.label} className="bg-indigo-50 dark:bg-indigo-900/30 rounded-xl p-4 text-center">
                   <div className="text-2xl mb-1">{item.icon}</div>
                   <p className="text-xl font-extrabold text-indigo-600">{item.value}</p>
-                  <p className="text-xs text-gray-500 mt-0.5">{item.label}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{item.label}</p>
                 </div>
               ))}
             </div>
@@ -163,15 +165,15 @@ const Dashboard = () => {
           <div className="flex flex-col gap-6">
 
             {/* Completion Checklist */}
-            <div className="bg-white rounded-2xl shadow-sm p-6">
-              <h2 className="text-lg font-bold text-gray-800 mb-4">Complete Your Profile</h2>
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6">
+              <h2 className="text-lg font-bold text-gray-800 dark:text-white mb-4">Complete Your Profile</h2>
               <ul className="space-y-3">
                 {completionItems.map((item) => (
                   <li key={item.label} className="flex items-center gap-3 text-sm">
-                    <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${item.done ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'}`}>
+                    <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${item.done ? 'bg-green-100 dark:bg-green-900/30 text-green-600' : 'bg-gray-100 dark:bg-gray-700 text-gray-400'}`}>
                       {item.done ? '✓' : '○'}
                     </span>
-                    <span className={item.done ? 'text-gray-400 line-through' : 'text-gray-700'}>
+                    <span className={item.done ? 'text-gray-400 dark:text-gray-500 line-through' : 'text-gray-700 dark:text-gray-300'}>
                       {item.label}
                     </span>
                   </li>
@@ -180,14 +182,14 @@ const Dashboard = () => {
             </div>
 
             {/* Share Profile */}
-            <div className="bg-indigo-50 rounded-2xl p-6">
-              <h2 className="text-lg font-bold text-gray-800 mb-2">Share Your Profile 🔗</h2>
-              <p className="text-sm text-gray-500 mb-4">Share your public portfolio link with recruiters.</p>
-              <div className="bg-white border border-indigo-200 rounded-xl px-3 py-2 text-xs text-indigo-600 font-medium truncate mb-3">
-                localhost:5173/profile/{user?.username}
+            <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-2xl p-6">
+              <h2 className="text-lg font-bold text-gray-800 dark:text-white mb-2">Share Your Profile 🔗</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">Share your public portfolio link with recruiters.</p>
+              <div className="bg-white dark:bg-gray-800 border border-indigo-200 dark:border-indigo-700 rounded-xl px-3 py-2 text-xs text-indigo-600 font-medium truncate mb-3">
+                {liveUrl}/profile/{user?.username}
               </div>
               <button
-                onClick={() => navigator.clipboard.writeText(`http://localhost:5173/profile/${user?.username}`)}
+                onClick={() => navigator.clipboard.writeText(`${liveUrl}/profile/${user?.username}`)}
                 className="w-full bg-indigo-600 text-white text-sm font-semibold py-2 rounded-xl hover:bg-indigo-700 transition"
               >
                 Copy Link
