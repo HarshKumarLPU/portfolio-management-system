@@ -6,7 +6,7 @@ import connectDB from './config/db.js'
 import authRoutes from './routes/authRoutes.js'
 import portfolioRoutes from './routes/portfolioRoutes.js'
 import { errorHandler } from './middleware/errorMiddleware.js'
-import cvRoutes from './routes/cvRoutes.js' 
+import cvRoutes from './routes/cvRoutes.js'
 import uploadRoutes from './routes/uploadRoutes.js'
 import passport from 'passport'
 import './config/passport.js'
@@ -16,24 +16,26 @@ connectDB()
 
 const app = express()
 
-// ── Middleware ──
+// ✅ Handle preflight requests FIRST before everything
+app.options('*', (req, res) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin)
+  res.header('Access-Control-Allow-Credentials', 'true')
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS')
+  res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+  res.sendStatus(200)
+})
+
+// ✅ CORS middleware
 app.use(cors({
   origin: function(origin, callback) {
-    const allowedOrigins = [
-      'http://localhost:5173',
-      process.env.CLIENT_URL,
-    ]
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
+    callback(null, true)
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }))
 
+// ── Middleware ──
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
