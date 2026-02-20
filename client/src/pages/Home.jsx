@@ -44,7 +44,7 @@ const Home = () => {
     <div className="font-sans">
 
       {/* ───── HERO SECTION ───── */}
-      <section className="bg-gradient-to-br from-indigo-600 to-purple-700 text-white py-24 px-4">
+      <section className="bg-gradient-to-br from-indigo-600 to-purple-700 dark:from-slate-900 dark:via-gray-900 dark:to-black text-white py-24 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <span className="bg-white text-indigo-600 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-widest mb-6 inline-block">
             Your Career. Your Story.
@@ -68,7 +68,7 @@ const Home = () => {
       </section>
 
       {/* ───── STATS SECTION ───── */}
-      <section className="bg-indigo-50 dark:bg-indigo-900/20 py-12 px-4">
+      <section className="bg-indigo-50 dark:bg-gradient-to-r dark:from-gray-900 dark:to-gray-800 py-12 px-4 transition-colors duration-300">
         <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           {[
             { number: '10K+', label: 'Users' },
@@ -77,8 +77,8 @@ const Home = () => {
             { number: '98%', label: 'Satisfaction Rate' },
           ].map((stat) => (
             <div key={stat.label}>
-              <p className="text-3xl font-extrabold text-indigo-600">{stat.number}</p>
-              <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">{stat.label}</p>
+              <p className="text-3xl font-extrabold text-indigo-600 dark:text-yellow-400">{stat.number}</p>
+              <p className="text-gray-500 dark:text-gray-300 text-sm mt-1">{stat.label}</p>
             </div>
           ))}
         </div>
@@ -120,7 +120,7 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {steps.map((item) => (
               <div key={item.step} className="bg-white dark:bg-gray-700 rounded-2xl p-8 shadow-sm hover:shadow-md transition">
-                <div className="text-5xl font-extrabold text-indigo-100 dark:text-indigo-900 mb-2">{item.step}</div>
+                <div className="text-5xl font-extrabold text-indigo-100 dark:text-yellow-400 mb-2">{item.step}</div>
                 <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-2">{item.title}</h3>
                 <p className="text-gray-500 dark:text-gray-300 text-sm">{item.desc}</p>
               </div>
@@ -130,7 +130,7 @@ const Home = () => {
       </section>
 
       {/* ───── CTA SECTION ───── */}
-      <section className="bg-gradient-to-r from-indigo-600 to-purple-700 text-white py-20 px-4 text-center">
+      <section className="bg-gradient-to-r from-indigo-600 to-purple-700 dark:bg-gradient-to-r dark:from-gray-900 dark:to-gray-800 text-white py-20 px-4 text-center">
         <h2 className="text-3xl md:text-4xl font-extrabold mb-4">
           Ready to Stand Out? 🌟
         </h2>

@@ -37,7 +37,7 @@ const Search = () => {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
 
       {/* ───── HERO ───── */}
-      <div className="bg-gradient-to-br from-indigo-600 to-purple-700 text-white py-16 px-4">
+      <div className="bg-gradient-to-br from-indigo-600 to-purple-700 dark:from-slate-900 dark:via-gray-900 dark:to-black text-white py-16 px-4">
         <div className="max-w-2xl mx-auto text-center">
           <h1 className="text-3xl md:text-4xl font-extrabold mb-3">
             Discover Portfolios 🔍

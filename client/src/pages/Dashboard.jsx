@@ -79,7 +79,7 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
 
       {/* Header */}
-      <div className="bg-gradient-to-r from-indigo-600 to-purple-700 text-white px-6 py-10">
+      <div className="bg-gradient-to-r from-indigo-600 to-purple-700 dark:from-slate-900 dark:via-gray-900 dark:to-black text-white px-6 py-10">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-6">
           <AvatarUpload />
           <div className="text-center md:text-left">

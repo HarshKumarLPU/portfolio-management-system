@@ -128,7 +128,7 @@ const EditPortfolio = () => {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
 
       {/* Header */}
-      <div className="bg-gradient-to-r from-indigo-600 to-purple-700 text-white px-6 py-8">
+      <div className="bg-gradient-to-r from-indigo-600 to-purple-700 dark:from-slate-900 dark:via-gray-900 dark:to-black text-white px-6 py-8">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-extrabold">Edit Portfolio ✏️</h1>

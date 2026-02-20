@@ -56,7 +56,7 @@ const Portfolio = () => {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
 
       {/* ───── HERO ───── */}
-      <div className="bg-gradient-to-br from-indigo-600 to-purple-700 text-white py-16 px-4">
+      <div className="bg-gradient-to-br from-indigo-600 to-purple-700 dark:from-slate-900 dark:via-gray-900 dark:to-black text-white py-16 px-4">
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8">
           <img
             src={user?.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${user?.fullName}`}
