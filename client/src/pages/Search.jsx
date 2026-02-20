@@ -99,7 +99,7 @@ const Search = () => {
                   className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-md transition hover:-translate-y-1 duration-200 overflow-hidden"
                 >
                   {/* Card Top */}
-                  <div className="bg-gradient-to-r from-indigo-500 to-purple-600 h-16 relative">
+                  <div className="bg-gradient-to-r from-indigo-500 to-purple-600 dark:from-slate-900 dark:via-gray-900 dark:to-black h-16 relative">
                     <img
                       src={portfolio.user?.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${portfolio.user?.fullName}`}
                       alt={portfolio.user?.fullName}
