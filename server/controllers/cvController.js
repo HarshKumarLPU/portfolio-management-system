@@ -172,54 +172,28 @@ export const generateCV = async (req, res) => {
     // ────────────────────────────
     // SKILLS SECTION
     // ────────────────────────────
-    if (portfolio.skills?.length > 0) {
-      sectionTitle('Skills')
+    doc.fontSize(10)
+      .font('Helvetica-Bold')
+      .fillColor('#1a1a2e')
+      .text(skill.name, x, rowY, { width: colWidth - 35, continued: true })
+      .font('Helvetica')
+      .fontSize(9)
+      .fillColor('#6366f1')
+      .text(`${skill.level}%`, { width: 30, align: 'right' })
 
-      const skillsPerRow = 3
-      const skillWidth = 160
-      const skillHeight = 20
-      let xPos = 50
-      let yPos = doc.y
+    const barY = doc.y + 2
+    const barWidth = colWidth
+    const fillWidth = Math.round((skill.level / 100) * barWidth)
 
-      portfolio.skills.forEach((skill, index) => {
-        if (index > 0 && index % skillsPerRow === 0) {
-          xPos = 50
-          yPos += skillHeight + 8
-        }
+    // Background bar
+    doc.roundedRect(x, barY, barWidth, 6, 3)
+      .fillColor('#e8e8f0')
+      .fill()
 
-        // Skill name
-        doc
-          .fontSize(10)
-          .font('Helvetica-Bold')
-          .fillColor('#1e293b')
-          .text(skill.name, xPos, yPos, { width: 80 })
-
-        // Progress bar background
-        doc
-          .rect(xPos + 85, yPos + 3, 70, 7)
-          .fillColor('#e2e8f0')
-          .fill()
-
-        // Progress bar fill
-        doc
-          .rect(xPos + 85, yPos + 3, (70 * skill.level) / 100, 7)
-          .fillColor('#6366f1')
-          .fill()
-
-        // Percentage
-        doc
-          .fontSize(8)
-          .font('Helvetica')
-          .fillColor('#64748b')
-          .text(`${skill.level}%`, xPos + 158, yPos + 2)
-
-        xPos += skillWidth + 5
-      })
-
-      doc.moveDown(
-        Math.ceil(portfolio.skills.length / skillsPerRow) * 1.5
-      )
-    }
+    // Fill bar
+    doc.roundedRect(x, barY, fillWidth, 6, 3)
+      .fillColor('#6366f1')
+      .fill()
 
     // ────────────────────────────
     // PROJECTS SECTION
